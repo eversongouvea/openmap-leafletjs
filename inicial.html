@@ -1,0 +1,31 @@
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Criação de um Mapa Inicial</title>
+
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link rel="stylesheet" href="node_modules/leaflet/dist/leaflet.css" />
+	</head>
+<body>
+
+	<div id="mapid" style="width: 600px; height: 400px;">
+
+	</div>
+	<script type="text/javascript">
+
+		var map = L.map('mapid').setView([-23.562778, -46.655037], 13);
+
+		L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+		    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+		}).addTo(map);
+
+		L.marker([-23.562778, -46.655037])
+			.addTo(map)
+		    .bindPopup('Poup via CSS3.<br />')
+		    .openPopup();
+	</script>
+	<script src="node_modules/leaflet/dist/leaflet.js"></script>
+</body>
+</html>
