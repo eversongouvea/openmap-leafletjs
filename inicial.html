@@ -10,14 +10,67 @@
 <body>
 
 	<div id="mapid" style="width: 600px; height: 400px;"></div>
+	
+	<table>
+		<tr>
+			<td><button onclick="javascript: clearMap()">Limpar Mapa</button></td>
+			<td><button onclick="javascript: addMarker()">Add Marker Simples</button></td>
+			<td><button onclick="javascript: addPolyline()">Add Polyline</button></td>
+			<td><button onclick="javascript: addMultiplesMarkersAndBound()">Add Markers And Bound</button></td>
+		</tr>
+	</table>
 	<script src="node_modules/leaflet/dist/leaflet.js"></script>
 	<script src="js/openmap.js"></script>
 	<script type="text/javascript">
+	
+		const map = new OpenMap("mapid", -23.5516, -46.6342, 3);
 
-		const map = new OpenMap("mapid", -23.562778, -46.655037, 13);
+		function clearMap(){
+			map.clearMap();
+		}
 
-		map.addMarker(-23.562778, -46.655037, 'Poup via CSS3.<br />');
-		
+		function addMarker(){
+
+			map.clearMap();
+
+			var html = "<table border=1 bordercolor=''#0000ff'><tr><td>fsdfsdfsdfsdfsdf</td></tr></table>";
+			
+			var marker = map.addMarker(-23.562778, -46.655037, "Add Marker....", html, "icons/car.png");
+
+			map.addZoom(marker);
+		}
+
+		function addPolyline(){
+
+			map.clearMap();
+			
+			var html = "<table border=1 bordercolor=''#0000ff'><tr><td>poup</td></tr></table>";
+			
+			var marker = map.addMarker(-23.58707, -46.64685, "fsdf", html, "icons/car.png");
+
+			var html = "<table border=1 bordercolor=''#0000ff'><tr><td>popup 2</td></tr></table>";
+			
+			var marker = map.addMarker(-23.58692, -46.64665, "fdsfdsfsdf", html, "icons/car.png");
+
+			map.addPolyline();
+		}
+
+
+		function addMultiplesMarkersAndBound(){
+			
+			map.clearMap();
+			
+			var html = "<table border=1 bordercolor=''#0000ff'><tr><td>poup</td></tr></table>";
+			
+			var marker = map.addMarker(-23.58558, -46.64637, "ponte 1", html, "icons/car.png");
+
+			var html = "<table border=1 bordercolor=''#0000ff'><tr><td>popup 2</td></tr></table>";
+			
+			var marker = map.addMarker(-23.27111, -47.45409, "ponte 2", html, "icons/car.png");
+
+			map.addBounds();
+		}
+				
 	</script>
 </body>
 </html>
