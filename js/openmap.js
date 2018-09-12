@@ -22,6 +22,52 @@ class Map{
 	getZoom(){
 		return this._zoom;
 	}
+	
+	/**
+	 * Executa a limpeza do mapa
+	 */
+	clearMap(){
+		throw new Error("Método não implementado.");
+	}
+	
+	/**
+	 * Adiciona um marker na instância de Mapa.
+	 * 
+	 * @param lat
+	 * @param lon
+	 * @param title
+	 * @param htmlTemplate
+	 * @param icon
+	 * @returns Marker
+	 */
+	addMarker(lat, lon, title, htmlTemplate, icon){
+		throw new Error("Método não implementado.");
+	}
+	
+	/**
+	 * Adiciona o Zoom no marker
+	 * 
+	 * @param marker
+	 */
+	addZoom(marker){
+		throw new Error("Método não implementado.");
+	}
+	
+	/**
+	 * Adiciona o Zoom em um conjunto de Markers
+	 */
+	addBounds(){
+		throw new Error("Método não implementado.");
+	}
+	
+	/**
+	 * Adiciona um Popup no Marker.
+	 * 
+	 * @returns Polyline
+	 */
+	addPolyline(){
+		throw new Error("Método não implementado.");
+	}
 }
 
 /**
@@ -69,16 +115,6 @@ class OpenMap extends Map{
 		this.map.setView(this.getLatlng(), this.getZoom());
 	}
 	
-	/**
-	 * Adiciona um marker na instância de Mapa.
-	 * 
-	 * @param lat
-	 * @param lon
-	 * @param title
-	 * @param htmlTemplate
-	 * @param icon
-	 * @returns Marker
-	 */
 	addMarker(lat, lon, title, htmlTemplate, icon){
 		
 		var options = new Object();
@@ -98,25 +134,14 @@ class OpenMap extends Map{
 		return marker;
 	}
 	
-	/**
-	 * Adiciona o Zoom no marker
-	 */
 	addZoom(marker){
 		this.map.setView(marker._latlng, 20);
 	}
 	
-	/**
-	 * Adiciona o Zoom em um conjunto de Markers
-	 */
 	addBounds(){
 		this.map.fitBounds(L.latLngBounds(this._markers.map(marker => marker._latlng)));
 	}
-	
-	/**
-	 * Adiciona um Popup no Marker.
-	 * 
-	 * @returns Polyline
-	 */
+		
 	addPolyline(){
 		
 		var latlngs = this._markers.map(marker => marker._latlng);
