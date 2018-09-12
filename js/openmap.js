@@ -1,75 +1,3 @@
-class Map{
-	
-	constructor(lat, lon, zoom){
-		this._latlng = [lat, lon];
-		this._zoom 	 = zoom;
-	}
-	
-	/**
-	 * Retorna a Lat/Lng inicial do Mapa
-	 * 
-	 * @returns latLng
-	 */
-	getLatlng(){
-		return this._latlng;
-	}
-	
-	/**
-	 * Retorna o Zoom inicial do Mapa
-	 * 
-	 * @returns zoom
-	 */
-	getZoom(){
-		return this._zoom;
-	}
-	
-	/**
-	 * Executa a limpeza do mapa
-	 */
-	clearMap(){
-		throw new Error("Método não implementado.");
-	}
-	
-	/**
-	 * Adiciona um marker na instância de Mapa.
-	 * 
-	 * @param lat
-	 * @param lon
-	 * @param title
-	 * @param htmlTemplate
-	 * @param icon
-	 * @returns Marker
-	 */
-	addMarker(lat, lon, title, htmlTemplate, icon){
-		throw new Error("Método não implementado.");
-	}
-	
-	/**
-	 * Adiciona o Zoom no marker
-	 * 
-	 * @param marker
-	 */
-	addZoom(marker){
-		throw new Error("Método não implementado.");
-	}
-	
-	/**
-	 * Adiciona o Zoom em um conjunto de Markers
-	 */
-	addBounds(){
-		throw new Error("Método não implementado.");
-	}
-	
-	/**
-	 * Adiciona um Popup no Marker.
-	 * 
-	 * @returns Polyline
-	 */
-	addPolyline(){
-		throw new Error("Método não implementado.");
-	}
-}
-
 /**
  * Classe para criação do Mapa OpenSource.
  */
@@ -86,7 +14,7 @@ class OpenMap extends Map{
 	constructor(lat, lon, zoom, mapid){
 		
 		super(lat, lon, zoom);
-		
+			
 		const url 	= "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png";
 		const config  = {
 		     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -95,9 +23,9 @@ class OpenMap extends Map{
 		this._markers  = [];
 		this._polyline = {};
 		
-		this.map = L.map(mapid).setView(this.getLatlng(), this.getZoom());
+		this._map = L.map(mapid).setView(this.getLatlng(), this.getZoom());
 		 	
-	    L.tileLayer(url, config).addTo(this.map);
+	    L.tileLayer(url, config).addTo(this._map);
 	}
 	
 	clearMap(){
@@ -112,7 +40,7 @@ class OpenMap extends Map{
 		if(this._polyline instanceof L.Polyline)
 			this._polyline.remove();
 		
-		this.map.setView(this.getLatlng(), this.getZoom());
+		this._map.setView(this.getLatlng(), this.getZoom());
 	}
 	
 	addMarker(lat, lon, title, htmlTemplate, icon){
@@ -124,7 +52,7 @@ class OpenMap extends Map{
 		if(icon !== undefined)
 			options.icon = L.icon({iconUrl: icon, iconSize: [32, 37]});
 				
-		let marker = L.marker([lat, lon], options).addTo(this.map);
+		let marker = L.marker([lat, lon], options).addTo(this._map);
 		
 		this._markers.push(marker);
 				
@@ -135,20 +63,20 @@ class OpenMap extends Map{
 	}
 	
 	addZoom(marker){
-		this.map.setView(marker._latlng, 20);
+		this._map.setView(marker._latlng, 20);
 	}
 	
 	addBounds(){
-		this.map.fitBounds(L.latLngBounds(this._markers.map(marker => marker._latlng)));
+		this._map.fitBounds(L.latLngBounds(this._markers.map(marker => marker._latlng)));
 	}
 		
 	addPolyline(){
 		
 		var latlngs = this._markers.map(marker => marker._latlng);
 		
-		this._polyline = L.polyline(latlngs, {color: 'red'}).addTo(this.map);
+		this._polyline = L.polyline(latlngs, {color: 'red'}).addTo(this._map);
 		
-		this.map.fitBounds(this._polyline.getBounds());
+		this._map.fitBounds(this._polyline.getBounds());
 		
 		return this._polyline;
 	}

@@ -7,24 +7,48 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<link rel="stylesheet" href="node_modules/leaflet/dist/leaflet.css" />
 	</head>
-<body>
-
-	<div id="mapid" style="width: 600px; height: 400px;"></div>
-	
-	<table>
-		<tr>
-			<td><button onclick="javascript: clearMap()">Limpar Mapa</button></td>
-			<td><button onclick="javascript: addMarker()">Add Marker Simples</button></td>
-			<td><button onclick="javascript: addPolyline()">Add Polyline</button></td>
-			<td><button onclick="javascript: addMultiplesMarkersAndBound()">Add Markers And Bound</button></td>
-		</tr>
-	</table>
+	<body onload="initMap()">
+		<table>
+			<tr>
+				<td colspan="2">
+					<select id="maptype" onchange="javascript: initMap()">
+						<option value="1" selected>Open Map</option>
+						<option value="2">Google Maps</option>
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<td><button onclick="javascript: clearMap()">Limpar Mapa</button></td>
+				<td><button onclick="javascript: addMarker()">Add Marker Simples</button></td>
+				<td><button onclick="javascript: addPolyline()">Add Polyline</button></td>
+				<td><button onclick="javascript: addMultiplesMarkersAndBound()">Add Markers And Bound</button></td>
+			</tr>
+		</table>
+		<div id="mapid" style="width: 800px; height: 600px;"></div>
+	</body>
+	<script type="text/javascript" src="https://maps.google.com/maps/api/js?key=AIzaSyDPQv3yNuHhhGausX-FkgpJnOL-7JFk9-Y"></script>
 	<script src="node_modules/leaflet/dist/leaflet.js"></script>
+	<script src="js/map.js"></script>
 	<script src="js/openmap.js"></script>
+	<script src="js/googlemaps.js"></script>
 	<script type="text/javascript">
 	
-		const map = new OpenMap(-23.5516, -46.6342, 3, "mapid");
+		var map;
+		
+		function initMap(){
 
+			var e = document.getElementById("maptype");
+
+			var value = e.options[e.selectedIndex].value;
+			
+			if(value == 1){
+				map = new OpenMap(-23.5516, -46.6342, 3, "mapid");
+			}
+			else{
+				map = new GoogleMaps(-23.5516, -46.6342, 3, "mapid");
+			}
+		}
+		
 		function clearMap(){
 			map.clearMap();
 		}
@@ -72,5 +96,4 @@
 		}
 				
 	</script>
-</body>
 </html>
