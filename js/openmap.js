@@ -13,25 +13,25 @@ class OpenMap extends Map{
 	 */
 	constructor(lat, lon, zoom, mapid){
 		
-		super(lat, lon, zoom);
+		super([lat, lon], zoom);
 			
 		const url 	= "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png";
 		const config  = {
 		     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
 		};
-		  
-		this._markers  = [];
-		this._polyline = {};
-		
+
 		this._map = L.map(mapid).setView(this.getLatlng(), this.getZoom());
 		 	
 	    L.tileLayer(url, config).addTo(this._map);
 	}
 	
+	reloadMap(){
+		this._map.setView(this.getLatlng(), this.getZoom());
+	}
+	
 	clearMap(){
 		
 		for(var i = 0; i < this._markers.length; i++){
-			
 			this._markers[i].remove()
 		}
 		
@@ -40,7 +40,7 @@ class OpenMap extends Map{
 		if(this._polyline instanceof L.Polyline)
 			this._polyline.remove();
 		
-		this._map.setView(this.getLatlng(), this.getZoom());
+		this.reloadMap();
 	}
 	
 	addMarker(lat, lon, title, htmlTemplate, icon){

@@ -1,8 +1,11 @@
 class Map{
 	
-	constructor(lat, lon, zoom){
-		this._latlng = [lat, lon];
+	constructor(latlng, zoom){
+		this._latlng = latlng;
 		this._zoom 	 = zoom;
+		
+		this._markers  = [];
+		this._polyline = {};
 	}
 	
 	/**
@@ -21,6 +24,13 @@ class Map{
 	 */
 	getZoom(){
 		return this._zoom;
+	}
+	
+	/**
+	 * Executa o reload do mapa
+	 */
+	reloadMap(){
+		throw new Error("Método não implementado.");
 	}
 	
 	/**
